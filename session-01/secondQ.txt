@@ -1,0 +1,28 @@
+CREATE TABLE student_tbl(
+    sno INT PRIMARY KEY,
+    grades CHAR(1),
+    marks INT
+);
+
+INSERT INTO student_tbl
+VALUES
+(1, 'A', 75),
+(2, 'B', 30),
+(3, 'C', 55),
+(4, 'A', 60),
+(5, 'D', 91),
+(6, 'B', 19),
+(7, 'G', 36),
+(8, 'S', 65);
+
+--add a columns remarks into the table and ensure that 
+
+alter table student_tbl  add column remarks varchar(20) generated always as (
+  case
+      when marks>=80 then 'very good'
+      when marks>70 and marks<80 then 'good'
+      else 'poor'
+  end
+  ) stored;
+  
+select * from student_tbl;
