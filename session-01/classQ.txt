@@ -1,0 +1,68 @@
+CREATE TABLE tbl_happiness( rankings INT,country VARCHAR(50) );
+
+INSERT INTO tbl_happiness (rankings, country)
+VALUES
+(1, 'Finland'),
+(2, 'Denmark'),
+(3, 'Iceland'),
+(4, 'Israel'),
+(5, 'Netherlands'),
+(6, 'Sweden'),
+(7, 'Norway'),
+(126, 'India'),
+(128, 'Sri Lanka');
+
+--write a query such that India appears at top followed by Sri Lanka and the rest  in the order of their ranking
+
+-- select rankings ,country ,
+-- case
+-- 	when country='India' then 1
+-- 	when country='Sri Lanka' then 2
+-- 	else 3
+-- end as priority_alloted
+-- from tbl_happiness
+-- order by priority_alloted, rankings;
+
+
+select rankings ,country from tbl_happiness
+order by 
+	case
+		when country='India' then 1
+		when country='Sri Lanka' then 2
+		else 3
+    end, 
+  rankings desc;
+
+
+
+
+  ----------------------------Q2--------------------------
+
+  CREATE TABLE student_tbl(
+    sno INT PRIMARY KEY,
+    grades CHAR(1),
+    marks INT
+);
+
+INSERT INTO student_tbl
+VALUES
+(1, 'A', 75),
+(2, 'B', 30),
+(3, 'C', 55),
+(4, 'A', 60),
+(5, 'D', 91),
+(6, 'B', 19),
+(7, 'G', 36),
+(8, 'S', 65);
+
+--add a columns remarks into the table and ensure that 
+
+alter table student_tbl  add column remarks varchar(20) generated always as (
+  case
+      when marks>=80 then 'very good'
+      when marks>70 and marks<80 then 'good'
+      else 'poor'
+  end
+  ) stored;
+  
+select * from student_tbl;
